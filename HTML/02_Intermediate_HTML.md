@@ -146,7 +146,334 @@
 
 ---
 
-## 📋 Advanced Forms
+## 📋 Advanced Forms and Validation
+
+### Custom Form Controls
+
+```html
+<form class="advanced-form" novalidate>
+    <fieldset>
+        <legend>Personal Information</legend>
+        
+        <!-- Custom file input -->
+        <div class="file-input-wrapper">
+            <input type="file" id="avatar" name="avatar" accept="image/*" multiple>
+            <label for="avatar" class="file-input-label">
+                <span class="file-icon">📁</span>
+                Choose Profile Image
+            </label>
+            <div class="file-preview"></div>
+        </div>
+        
+        <!-- Custom date picker -->
+        <div class="date-input-group">
+            <label for="birthdate">Birth Date:</label>
+            <input type="date" id="birthdate" name="birthdate" 
+                   min="1900-01-01" max="2024-12-31" required>
+        </div>
+        
+        <!-- Multi-step slider -->
+        <div class="slider-group">
+            <label for="experience">Experience Level:</label>
+            <input type="range" id="experience" name="experience" 
+                   min="1" max="10" value="5" step="1">
+            <output for="experience">5 years</output>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Preferences</legend>
+        
+        <!-- Custom checkbox group -->
+        <div class="checkbox-group">
+            <p>Select your interests:</p>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="interests" value="technology">
+                <span class="checkmark"></span>
+                Technology
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="interests" value="design">
+                <span class="checkmark"></span>
+                Design
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="interests" value="business">
+                <span class="checkmark"></span>
+                Business
+            </label>
+        </div>
+        
+        <!-- Custom radio group -->
+        <div class="radio-group">
+            <p>Preferred contact method:</p>
+            <label class="custom-radio">
+                <input type="radio" name="contact" value="email">
+                <span class="radio-mark"></span>
+                Email
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="contact" value="phone">
+                <span class="radio-mark"></span>
+                Phone
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="contact" value="sms">
+                <span class="radio-mark"></span>
+                SMS
+            </label>
+        </div>
+    </fieldset>
+    
+    <div class="form-actions">
+        <button type="submit" class="btn-primary">Submit Form</button>
+        <button type="reset" class="btn-secondary">Reset</button>
+    </div>
+</form>
+
+<style>
+.advanced-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+fieldset {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #333;
+}
+
+.file-input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.file-input-wrapper input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.file-input-label:hover {
+    background: #0056b3;
+}
+
+.custom-checkbox, .custom-radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.custom-checkbox input, .custom-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark, .radio-mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 3px;
+}
+
+.radio-mark {
+    border-radius: 50%;
+}
+
+.custom-checkbox input:checked ~ .checkmark,
+.custom-radio input:checked ~ .radio-mark {
+    background-color: #007bff;
+}
+
+.checkmark:after, .radio-mark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after,
+.custom-radio input:checked ~ .radio-mark:after {
+    display: block;
+}
+
+.custom-checkbox .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.custom-radio .radio-mark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: #28a745;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #218838;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+}
+</style>
+```
+
+---
+
+## 🎯 Accessibility Best Practices
+
+### ARIA Labels and Roles
+
+```html
+<!-- Accessible navigation -->
+<nav role="navigation" aria-label="Main navigation">
+    <ul>
+        <li><a href="/" aria-current="page">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Accessible modal dialog -->
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" hidden>
+    <div class="modal-content">
+        <header>
+            <h2 id="modal-title">Confirmation</h2>
+            <button type="button" class="close-btn" aria-label="Close dialog">×</button>
+        </header>
+        <div id="modal-desc">
+            <p>Are you sure you want to delete this item?</p>
+        </div>
+        <footer>
+            <button type="button" class="btn-danger">Delete</button>
+            <button type="button" class="btn-cancel">Cancel</button>
+        </footer>
+    </div>
+</div>
+
+<!-- Accessible form with error handling -->
+<form>
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" 
+               aria-describedby="username-help username-error" 
+               aria-invalid="false" required>
+        <div id="username-help" class="help-text">
+            Must be 3-20 characters long
+        </div>
+        <div id="username-error" class="error-text" role="alert" hidden>
+            Username is required
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <fieldset>
+            <legend>Account Type:</legend>
+            <div role="radiogroup" aria-labelledby="account-type-legend">
+                <label>
+                    <input type="radio" name="account-type" value="personal">
+                    Personal Account
+                </label>
+                <label>
+                    <input type="radio" name="account-type" value="business">
+                    Business Account
+                </label>
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+<!-- Accessible data table -->
+<table role="table" aria-label="Sales data for Q1 2024">
+    <caption>Quarterly Sales Report - Q1 2024</caption>
+    <thead>
+        <tr>
+            <th scope="col" id="month">Month</th>
+            <th scope="col" id="sales">Sales ($)</th>
+            <th scope="col" id="growth">Growth (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row" headers="month">January</th>
+            <td headers="sales month">$50,000</td>
+            <td headers="growth month">+5%</td>
+        </tr>
+        <tr>
+            <th scope="row" headers="month">February</th>
+            <td headers="sales month">$55,000</td>
+            <td headers="growth month">+10%</td>
+        </tr>
+        <tr>
+            <th scope="row" headers="month">March</th>
+            <td headers="sales month">$60,000</td>
+            <td headers="growth month">+9%</td>
+        </tr>
+    </tbody>
+</table>
+```anced Forms
 
 ### Complex Form Structure
 
