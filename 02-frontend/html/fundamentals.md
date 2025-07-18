@@ -775,3 +775,442 @@
 <img src="image.jpg" alt="Description" width="100" height="100">
 <input type="text" name="field-name" value="default-value" placeholder="Hint text">
 <form action="submit.php" method="POST" enctype="multipart/form-data">
+# 📖 HTML Fundamentals
+
+## 🌟 What is HTML?
+
+HTML (HyperText Markup Language) is the standard markup language for creating web pages. It describes the structure and content of a webpage using elements and tags.
+
+## 🏗️ HTML Document Structure
+
+### Basic HTML5 Document
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>This is a paragraph.</p>
+</body>
+</html>
+```
+
+### Document Components
+
+- **DOCTYPE**: Declares the document type
+- **html**: Root element with language attribute
+- **head**: Contains metadata
+- **body**: Contains visible content
+
+## 🏷️ HTML Elements and Tags
+
+### Basic Syntax
+
+```html
+<!-- Opening tag with attributes -->
+<tagname attribute="value">Content</tagname>
+
+<!-- Self-closing tag -->
+<tagname attribute="value" />
+
+<!-- Comment -->
+<!-- This is a comment -->
+```
+
+### Common HTML Elements
+
+#### Text Elements
+```html
+<!-- Headings -->
+<h1>Main Heading</h1>
+<h2>Section Heading</h2>
+<h3>Subsection Heading</h3>
+<h4>Minor Heading</h4>
+<h5>Small Heading</h5>
+<h6>Smallest Heading</h6>
+
+<!-- Paragraphs -->
+<p>This is a paragraph of text.</p>
+
+<!-- Text formatting -->
+<strong>Important text</strong>
+<em>Emphasized text</em>
+<mark>Highlighted text</mark>
+<small>Small text</small>
+<del>Deleted text</del>
+<ins>Inserted text</ins>
+<sub>Subscript</sub>
+<sup>Superscript</sup>
+
+<!-- Line breaks -->
+<br />
+<hr />
+```
+
+#### Lists
+```html
+<!-- Unordered list -->
+<ul>
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+</ul>
+
+<!-- Ordered list -->
+<ol>
+    <li>First step</li>
+    <li>Second step</li>
+    <li>Third step</li>
+</ol>
+
+<!-- Description list -->
+<dl>
+    <dt>HTML</dt>
+    <dd>HyperText Markup Language</dd>
+    <dt>CSS</dt>
+    <dd>Cascading Style Sheets</dd>
+</dl>
+```
+
+#### Links and Images
+```html
+<!-- Links -->
+<a href="https://example.com">External link</a>
+<a href="/page.html">Internal link</a>
+<a href="#section">Link to section</a>
+<a href="mailto:user@example.com">Email link</a>
+<a href="tel:+1234567890">Phone link</a>
+
+<!-- Images -->
+<img src="image.jpg" alt="Description of image" />
+<img src="image.jpg" alt="Description" width="300" height="200" />
+
+<!-- Figure with caption -->
+<figure>
+    <img src="chart.png" alt="Sales chart" />
+    <figcaption>Monthly sales data for 2023</figcaption>
+</figure>
+```
+
+## 🎯 Semantic HTML5 Elements
+
+### Page Structure Elements
+```html
+<header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <article>
+        <header>
+            <h1>Article Title</h1>
+            <p>Published on <time datetime="2023-12-01">December 1, 2023</time></p>
+        </header>
+        
+        <section>
+            <h2>Section Title</h2>
+            <p>Section content...</p>
+        </section>
+        
+        <aside>
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="#link1">Related Article 1</a></li>
+                <li><a href="#link2">Related Article 2</a></li>
+            </ul>
+        </aside>
+    </article>
+</main>
+
+<footer>
+    <p>&copy; 2023 My Website. All rights reserved.</p>
+</footer>
+```
+
+### Content Elements
+```html
+<!-- Article content -->
+<article>
+    <header>
+        <h1>Article Title</h1>
+        <address>
+            Written by <a href="mailto:author@example.com">John Doe</a>
+        </address>
+    </header>
+    
+    <p>Article content...</p>
+    
+    <blockquote cite="https://example.com">
+        <p>This is a quotation from another source.</p>
+    </blockquote>
+    
+    <details>
+        <summary>Click to expand</summary>
+        <p>Hidden content that can be toggled.</p>
+    </details>
+</article>
+
+<!-- Code examples -->
+<pre><code>
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+</code></pre>
+
+<p>Use the <code>console.log()</code> function to output to the console.</p>
+```
+
+## 📝 HTML Forms
+
+### Basic Form Structure
+```html
+<form action="/submit" method="post">
+    <fieldset>
+        <legend>Personal Information</legend>
+        
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="1" max="120">
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" cols="50"></textarea>
+        
+        <input type="submit" value="Submit">
+    </fieldset>
+</form>
+```
+
+### Input Types
+```html
+<!-- Text inputs -->
+<input type="text" placeholder="Enter text">
+<input type="email" placeholder="Enter email">
+<input type="password" placeholder="Enter password">
+<input type="search" placeholder="Search...">
+<input type="url" placeholder="Enter URL">
+<input type="tel" placeholder="Enter phone number">
+
+<!-- Number inputs -->
+<input type="number" min="0" max="100" step="1">
+<input type="range" min="0" max="100" value="50">
+
+<!-- Date and time inputs -->
+<input type="date">
+<input type="time">
+<input type="datetime-local">
+<input type="month">
+<input type="week">
+
+<!-- Selection inputs -->
+<input type="checkbox" id="agree" name="agree">
+<label for="agree">I agree to the terms</label>
+
+<input type="radio" id="male" name="gender" value="male">
+<label for="male">Male</label>
+<input type="radio" id="female" name="gender" value="female">
+<label for="female">Female</label>
+
+<select name="country">
+    <option value="us">United States</option>
+    <option value="ca">Canada</option>
+    <option value="uk">United Kingdom</option>
+</select>
+
+<!-- File input -->
+<input type="file" accept=".pdf,.doc,.docx">
+<input type="file" accept="image/*" multiple>
+
+<!-- Other inputs -->
+<input type="hidden" name="csrf_token" value="abc123">
+<input type="color" value="#ff0000">
+```
+
+## 🎵 Multimedia Elements
+
+### Audio
+```html
+<audio controls>
+    <source src="audio.mp3" type="audio/mpeg">
+    <source src="audio.ogg" type="audio/ogg">
+    Your browser does not support the audio element.
+</audio>
+
+<audio controls autoplay loop>
+    <source src="background.mp3" type="audio/mpeg">
+</audio>
+```
+
+### Video
+```html
+<video controls width="640" height="360">
+    <source src="video.mp4" type="video/mp4">
+    <source src="video.webm" type="video/webm">
+    <track kind="subtitles" src="subtitles.vtt" srclang="en" label="English">
+    Your browser does not support the video element.
+</video>
+
+<video controls poster="thumbnail.jpg">
+    <source src="video.mp4" type="video/mp4">
+</video>
+```
+
+### Embedded Content
+```html
+<!-- Iframe -->
+<iframe src="https://example.com" width="600" height="400" title="External content"></iframe>
+
+<!-- Embed -->
+<embed src="document.pdf" type="application/pdf" width="600" height="400">
+
+<!-- Object -->
+<object data="flash-movie.swf" type="application/x-shockwave-flash">
+    <param name="movie" value="flash-movie.swf">
+    Alternative content for browsers that don't support Flash.
+</object>
+```
+
+## 🏷️ HTML Attributes
+
+### Global Attributes
+```html
+<!-- ID and Class -->
+<div id="unique-element" class="container highlight">Content</div>
+
+<!-- Data attributes -->
+<div data-user-id="123" data-role="admin">User info</div>
+
+<!-- Title and lang -->
+<p title="Tooltip text" lang="fr">Bonjour le monde</p>
+
+<!-- Hidden -->
+<div hidden>This content is hidden</div>
+
+<!-- Contenteditable -->
+<div contenteditable="true">This text can be edited</div>
+
+<!-- Draggable -->
+<div draggable="true">This element can be dragged</div>
+
+<!-- Spellcheck -->
+<textarea spellcheck="true">Check spelling in this text</textarea>
+```
+
+### Form Attributes
+```html
+<!-- Required and validation -->
+<input type="text" required pattern="[A-Za-z]+" title="Letters only">
+
+<!-- Placeholder and autocomplete -->
+<input type="text" placeholder="Enter your name" autocomplete="name">
+
+<!-- Disabled and readonly -->
+<input type="text" disabled>
+<input type="text" readonly value="Cannot be changed">
+
+<!-- Multiple and size -->
+<select multiple size="4">
+    <option>Option 1</option>
+    <option>Option 2</option>
+    <option>Option 3</option>
+    <option>Option 4</option>
+</select>
+```
+
+## 🔗 HTML Best Practices
+
+### 1. Use Semantic Elements
+```html
+<!-- ❌ Non-semantic -->
+<div class="header">
+    <div class="nav">...</div>
+</div>
+
+<!-- ✅ Semantic -->
+<header>
+    <nav>...</nav>
+</header>
+```
+
+### 2. Proper Heading Hierarchy
+```html
+<!-- ✅ Correct hierarchy -->
+<h1>Main Title</h1>
+<h2>Section Title</h2>
+<h3>Subsection Title</h3>
+<h2>Another Section</h2>
+```
+
+### 3. Meaningful Alt Text
+```html
+<!-- ❌ Poor alt text -->
+<img src="dog.jpg" alt="image">
+
+<!-- ✅ Descriptive alt text -->
+<img src="dog.jpg" alt="Golden retriever playing fetch in the park">
+```
+
+### 4. Valid HTML Structure
+```html
+<!-- ✅ Properly nested elements -->
+<ul>
+    <li><a href="#link1">Link 1</a></li>
+    <li><a href="#link2">Link 2</a></li>
+</ul>
+
+<!-- ✅ Closed tags -->
+<p>This paragraph is properly closed.</p>
+<img src="image.jpg" alt="Description" />
+```
+
+## 📏 HTML Validation
+
+### W3C Validator
+- Use the [W3C Markup Validator](https://validator.w3.org/)
+- Check HTML syntax and structure
+- Identify accessibility issues
+- Ensure standards compliance
+
+### Common Validation Errors
+```html
+<!-- ❌ Missing closing tag -->
+<p>This paragraph is not closed
+
+<!-- ❌ Incorrect nesting -->
+<strong><em>Incorrectly nested</strong></em>
+
+<!-- ❌ Missing alt attribute -->
+<img src="image.jpg">
+
+<!-- ❌ Duplicate IDs -->
+<div id="content">First div</div>
+<div id="content">Second div</div>
+
+<!-- ✅ Corrected versions -->
+<p>This paragraph is properly closed.</p>
+<strong><em>Correctly nested</em></strong>
+<img src="image.jpg" alt="Description">
+<div id="content1">First div</div>
+<div id="content2">Second div</div>
+```
+
+This comprehensive fundamentals guide covers the essential HTML concepts needed to create well-structured, semantic, and accessible web pages.
+
+---
+
+**Next:** Continue to HTML Practical exercises to apply these concepts

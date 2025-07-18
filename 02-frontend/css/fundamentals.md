@@ -993,3 +993,676 @@ h1, h2, h3, h4, h5, h6 {
 3. Explore CSS animations
 4. Practice with real projects
 5. Learn CSS preprocessors (Sass/Less)
+# 🎨 CSS Fundamentals
+
+## Table of Contents
+- [CSS Syntax and Selectors](#css-syntax-and-selectors)
+- [Box Model](#box-model)
+- [Layout Systems](#layout-systems)
+- [Typography and Colors](#typography-and-colors)
+- [Responsive Design](#responsive-design)
+- [CSS Units](#css-units)
+- [Positioning](#positioning)
+- [Flexbox](#flexbox)
+- [CSS Grid](#css-grid)
+- [Transitions and Animations](#transitions-and-animations)
+
+---
+
+## 🎯 CSS Syntax and Selectors
+
+### Basic Syntax
+
+```css
+/* CSS Rule Structure */
+selector {
+    property: value;
+    property: value;
+}
+
+/* Example */
+h1 {
+    color: blue;
+    font-size: 24px;
+    margin: 16px 0;
+}
+```
+
+### CSS Selectors
+
+```css
+/* Element Selector */
+p {
+    color: black;
+}
+
+/* Class Selector */
+.highlight {
+    background-color: yellow;
+}
+
+/* ID Selector */
+#header {
+    background-color: navy;
+}
+
+/* Attribute Selector */
+input[type="text"] {
+    border: 1px solid gray;
+}
+
+/* Descendant Selector */
+nav ul li {
+    list-style: none;
+}
+
+/* Child Selector */
+nav > ul {
+    margin: 0;
+}
+
+/* Pseudo-classes */
+a:hover {
+    color: red;
+}
+
+button:focus {
+    outline: 2px solid blue;
+}
+
+li:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+
+/* Pseudo-elements */
+p::first-line {
+    font-weight: bold;
+}
+
+h2::before {
+    content: "★ ";
+    color: gold;
+}
+```
+
+---
+
+## 📦 Box Model
+
+### Understanding the Box Model
+
+```css
+.box {
+    /* Content area */
+    width: 200px;
+    height: 100px;
+    
+    /* Padding (inside the border) */
+    padding: 20px;
+    
+    /* Border */
+    border: 2px solid black;
+    
+    /* Margin (outside the border) */
+    margin: 10px;
+    
+    /* Box-sizing property */
+    box-sizing: border-box; /* Includes padding and border in width/height */
+}
+
+/* Visual representation:
+┌─────────────────── margin ──────────────────┐
+│ ┌─────────────── border ─────────────────┐ │
+│ │ ┌─────────── padding ─────────────┐ │ │
+│ │ │ ┌─── content (width/height) ─┐ │ │ │
+│ │ │ │                             │ │ │ │
+│ │ │ └─────────────────────────────┘ │ │ │
+│ │ └─────────────────────────────────┘ │ │
+│ └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+*/
+```
+
+### Box Model Properties
+
+```css
+.element {
+    /* Margin shortcuts */
+    margin: 10px;                    /* All sides */
+    margin: 10px 20px;              /* Top/bottom, left/right */
+    margin: 10px 20px 15px;         /* Top, left/right, bottom */
+    margin: 10px 20px 15px 25px;    /* Top, right, bottom, left */
+    
+    /* Individual margins */
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    margin-left: 25px;
+    
+    /* Padding (same pattern as margin) */
+    padding: 15px;
+    
+    /* Border */
+    border: 1px solid black;
+    border-width: 2px;
+    border-style: solid;
+    border-color: red;
+    border-radius: 5px;
+}
+```
+
+---
+
+## 🏗️ Layout Systems
+
+### Normal Flow
+
+```css
+/* Block elements */
+div, p, h1, section {
+    display: block;        /* Takes full width, stacks vertically */
+}
+
+/* Inline elements */
+span, a, strong, em {
+    display: inline;       /* Takes only needed width, flows horizontally */
+}
+
+/* Inline-block elements */
+.inline-block {
+    display: inline-block; /* Inline flow but can have width/height */
+    width: 100px;
+    height: 50px;
+}
+```
+
+### Display Property
+
+```css
+.hidden {
+    display: none;         /* Removes element from layout */
+}
+
+.invisible {
+    visibility: hidden;    /* Hides element but keeps space */
+}
+
+.flex-container {
+    display: flex;         /* Flexbox layout */
+}
+
+.grid-container {
+    display: grid;         /* Grid layout */
+}
+```
+
+---
+
+## 🎨 Typography and Colors
+
+### Font Properties
+
+```css
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;      /* normal, bold, 100-900 */
+    font-style: normal;    /* normal, italic, oblique */
+    line-height: 1.5;      /* Unitless preferred */
+    letter-spacing: 0.02em;
+    text-transform: none;   /* uppercase, lowercase, capitalize */
+}
+
+h1 {
+    font-size: 2.5rem;     /* Relative to root font size */
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.small-text {
+    font-size: 0.875rem;  /* 14px if root is 16px */
+}
+```
+
+### Color Properties
+
+```css
+.colors {
+    /* Named colors */
+    color: red;
+    
+    /* Hex colors */
+    background-color: #ff0000;      /* Red */
+    border-color: #f00;             /* Short hex */
+    
+    /* RGB/RGBA */
+    color: rgb(255, 0, 0);          /* Red */
+    background-color: rgba(255, 0, 0, 0.5);  /* Semi-transparent red */
+    
+    /* HSL/HSLA */
+    color: hsl(0, 100%, 50%);       /* Red */
+    background-color: hsla(0, 100%, 50%, 0.5);
+    
+    /* CSS Variables */
+    color: var(--primary-color, blue);  /* With fallback */
+}
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+}
+```
+
+---
+
+## 📱 Responsive Design
+
+### Media Queries
+
+```css
+/* Mobile First Approach */
+.container {
+    width: 100%;
+    padding: 16px;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+        padding: 32px;
+    }
+}
+
+/* Common Breakpoints */
+@media (max-width: 767px) { /* Mobile */ }
+@media (min-width: 768px) and (max-width: 1023px) { /* Tablet */ }
+@media (min-width: 1024px) { /* Desktop */ }
+```
+
+### Flexible Images
+
+```css
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.responsive-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.responsive-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+```
+
+---
+
+## 📏 CSS Units
+
+### Absolute Units
+
+```css
+.absolute-units {
+    width: 300px;          /* Pixels */
+    height: 2in;           /* Inches */
+    margin: 1cm;           /* Centimeters */
+    padding: 10mm;         /* Millimeters */
+    border-width: 1pt;     /* Points */
+}
+```
+
+### Relative Units
+
+```css
+.relative-units {
+    /* Relative to font size */
+    width: 20em;           /* Relative to element's font size */
+    height: 15rem;         /* Relative to root font size */
+    
+    /* Relative to viewport */
+    width: 50vw;           /* 50% of viewport width */
+    height: 100vh;         /* 100% of viewport height */
+    font-size: 4vmin;      /* 4% of viewport's smaller dimension */
+    
+    /* Relative to parent */
+    width: 80%;            /* 80% of parent's width */
+}
+```
+
+---
+
+## 🎯 Positioning
+
+### Position Property
+
+```css
+.static {
+    position: static;      /* Default - normal flow */
+}
+
+.relative {
+    position: relative;    /* Relative to normal position */
+    top: 10px;
+    left: 20px;
+}
+
+.absolute {
+    position: absolute;    /* Relative to nearest positioned ancestor */
+    top: 0;
+    right: 0;
+}
+
+.fixed {
+    position: fixed;       /* Relative to viewport */
+    bottom: 20px;
+    right: 20px;
+}
+
+.sticky {
+    position: sticky;      /* Switches between relative and fixed */
+    top: 0;               /* Sticks when this distance from top */
+}
+```
+
+### Z-index
+
+```css
+.layer-1 {
+    position: relative;
+    z-index: 1;
+}
+
+.layer-2 {
+    position: absolute;
+    z-index: 10;          /* Higher values appear on top */
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;        /* High value for modals */
+}
+```
+
+---
+
+## 🔧 Flexbox
+
+### Flex Container
+
+```css
+.flex-container {
+    display: flex;
+    
+    /* Direction */
+    flex-direction: row;        /* row, row-reverse, column, column-reverse */
+    
+    /* Wrapping */
+    flex-wrap: nowrap;          /* nowrap, wrap, wrap-reverse */
+    
+    /* Shorthand */
+    flex-flow: row wrap;        /* flex-direction + flex-wrap */
+    
+    /* Alignment */
+    justify-content: flex-start; /* flex-start, flex-end, center, space-between, space-around, space-evenly */
+    align-items: stretch;        /* stretch, flex-start, flex-end, center, baseline */
+    align-content: flex-start;   /* For wrapped lines */
+}
+```
+
+### Flex Items
+
+```css
+.flex-item {
+    /* Flexibility */
+    flex-grow: 1;          /* How much to grow */
+    flex-shrink: 1;        /* How much to shrink */
+    flex-basis: auto;      /* Initial size */
+    
+    /* Shorthand */
+    flex: 1 1 auto;        /* grow shrink basis */
+    flex: 1;               /* Common: grow=1, shrink=1, basis=0 */
+    
+    /* Individual alignment */
+    align-self: center;    /* Overrides align-items for this item */
+}
+```
+
+### Common Flexbox Patterns
+
+```css
+/* Center content */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Equal width columns */
+.equal-columns {
+    display: flex;
+}
+
+.equal-columns > * {
+    flex: 1;
+}
+
+/* Sidebar layout */
+.sidebar-layout {
+    display: flex;
+}
+
+.sidebar {
+    flex: 0 0 250px;       /* Fixed width sidebar */
+}
+
+.main-content {
+    flex: 1;               /* Takes remaining space */
+}
+```
+
+---
+
+## 🔲 CSS Grid
+
+### Grid Container
+
+```css
+.grid-container {
+    display: grid;
+    
+    /* Columns and rows */
+    grid-template-columns: 200px 1fr 100px;    /* Fixed, flexible, fixed */
+    grid-template-rows: auto 1fr auto;          /* Header, content, footer */
+    
+    /* Alternative syntax */
+    grid-template-columns: repeat(3, 1fr);      /* Three equal columns */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive */
+    
+    /* Gaps */
+    grid-gap: 20px;                   /* Row and column gap */
+    grid-row-gap: 20px;              /* Row gap only */
+    grid-column-gap: 15px;           /* Column gap only */
+    
+    /* Areas */
+    grid-template-areas: 
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+```
+
+### Grid Items
+
+```css
+.grid-item {
+    /* Position by line numbers */
+    grid-column: 1 / 3;        /* From line 1 to line 3 */
+    grid-row: 2 / 4;
+    
+    /* Position by area */
+    grid-area: header;
+    
+    /* Span multiple cells */
+    grid-column: span 2;       /* Span 2 columns */
+    grid-row: span 3;          /* Span 3 rows */
+}
+
+/* Named areas */
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+```
+
+### Responsive Grid
+
+```css
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+/* Card layout */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 200px;
+    grid-gap: 16px;
+}
+```
+
+---
+
+## ✨ Transitions and Animations
+
+### CSS Transitions
+
+```css
+.button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    /* Transition */
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: darkblue;
+}
+
+/* Multiple properties */
+.card {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+```
+
+### CSS Animations
+
+```css
+/* Define keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Apply animation */
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.loading-spinner {
+    animation: spin 2s linear infinite;
+}
+
+/* Animation properties */
+.animated-element {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0.5s;
+    animation-iteration-count: 1;        /* or infinite */
+    animation-direction: normal;         /* normal, reverse, alternate */
+    animation-fill-mode: forwards;       /* none, forwards, backwards, both */
+    
+    /* Shorthand */
+    animation: fadeIn 1s ease-in-out 0.5s forwards;
+}
+```
+
+---
+
+## 🎯 Key Concepts Summary
+
+### CSS Fundamentals Checklist:
+- ✅ Understand CSS syntax and selectors
+- ✅ Master the box model
+- ✅ Learn display and positioning
+- ✅ Practice flexbox for 1D layouts
+- ✅ Practice CSS Grid for 2D layouts
+- ✅ Implement responsive design
+- ✅ Work with typography and colors
+- ✅ Add transitions and animations
+
+### Best Practices:
+1. **Use semantic class names** (`.button-primary` not `.blue-button`)
+2. **Follow mobile-first approach** for responsive design
+3. **Use CSS custom properties** for consistent theming
+4. **Optimize for performance** (avoid expensive properties)
+5. **Keep specificity low** for maintainable CSS
+6. **Use flexbox for components**, Grid for layouts
+7. **Test across different browsers** and devices
+
+### Next Steps:
+1. Practice building layouts with Flexbox and Grid
+2. Learn CSS preprocessors (Sass, Less)
+3. Explore CSS frameworks (Bootstrap, Tailwind)
+4. Study CSS-in-JS solutions
+5. Learn about CSS architecture patterns
+
+This comprehensive guide covers the fundamental concepts of CSS that every web developer should master.

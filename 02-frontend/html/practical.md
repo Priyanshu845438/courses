@@ -2082,3 +2082,952 @@ function saveSettings() {
 4. Study web performance optimization
 5. Practice accessibility testing
 6. Learn about web security
+# 🔨 HTML Practical Exercises
+
+## 🛠️ Project 1: Personal Portfolio Website
+
+Create a complete personal portfolio website using semantic HTML.
+
+### Project Structure
+```
+portfolio/
+├── index.html
+├── about.html
+├── projects.html
+├── contact.html
+└── assets/
+    ├── images/
+    └── docs/
+```
+
+### index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="John Doe - Full Stack Developer Portfolio">
+    <meta name="keywords" content="developer, web development, portfolio, JavaScript, HTML, CSS">
+    <meta name="author" content="John Doe">
+    <title>John Doe - Full Stack Developer</title>
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <h1>John Doe</h1>
+            <p>Full Stack Developer</p>
+            <img src="assets/images/profile.jpg" alt="John Doe, Full Stack Developer" width="200" height="200">
+        </section>
+
+        <section id="featured-projects">
+            <h2>Featured Projects</h2>
+            <article>
+                <h3>E-commerce Platform</h3>
+                <p>A full-featured online store built with React and Node.js</p>
+                <a href="projects.html#ecommerce">View Project</a>
+            </article>
+            
+            <article>
+                <h3>Task Management App</h3>
+                <p>A collaborative task management tool with real-time updates</p>
+                <a href="projects.html#taskmanager">View Project</a>
+            </article>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <ul>
+                <li>JavaScript (ES6+)</li>
+                <li>React.js</li>
+                <li>Node.js</li>
+                <li>HTML5 & CSS3</li>
+                <li>MongoDB</li>
+                <li>Git & GitHub</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 John Doe. All rights reserved.</p>
+        <address>
+            <a href="mailto:john@example.com">john@example.com</a> |
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </address>
+    </footer>
+</body>
+</html>
+```
+
+### about.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About John Doe - Full Stack Developer">
+    <title>About - John Doe</title>
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" aria-current="page">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <header>
+                <h1>About Me</h1>
+                <p>Learn more about my journey as a developer</p>
+            </header>
+
+            <section>
+                <h2>Background</h2>
+                <p>I'm a passionate full-stack developer with 5 years of experience building modern web applications. I love solving complex problems and creating intuitive user experiences.</p>
+                
+                <figure>
+                    <img src="assets/images/workspace.jpg" alt="John's development workspace with multiple monitors" width="600" height="400">
+                    <figcaption>My development workspace where the magic happens</figcaption>
+                </figure>
+            </section>
+
+            <section>
+                <h2>Education</h2>
+                <dl>
+                    <dt>Bachelor of Science in Computer Science</dt>
+                    <dd>University of Technology, 2018</dd>
+                    <dt>Full Stack Web Development Certificate</dt>
+                    <dd>Code Academy, 2019</dd>
+                </dl>
+            </section>
+
+            <section>
+                <h2>Experience</h2>
+                <article>
+                    <h3>Senior Developer at Tech Corp</h3>
+                    <p><time datetime="2021-03">March 2021</time> - Present</p>
+                    <ul>
+                        <li>Lead development of customer-facing web applications</li>
+                        <li>Mentor junior developers</li>
+                        <li>Implemented CI/CD pipelines</li>
+                    </ul>
+                </article>
+
+                <article>
+                    <h3>Front-end Developer at StartupXYZ</h3>
+                    <p><time datetime="2019-06">June 2019</time> - <time datetime="2021-02">February 2021</time></p>
+                    <ul>
+                        <li>Built responsive web applications using React</li>
+                        <li>Collaborated with design team on UI/UX</li>
+                        <li>Optimized application performance</li>
+                    </ul>
+                </article>
+            </section>
+
+            <section>
+                <h2>Philosophy</h2>
+                <blockquote>
+                    <p>Clean code is not written by following a set of rules. You don't become a software craftsman by learning a list of heuristics. Professionalism and craftsmanship come from values that drive disciplines.</p>
+                    <cite>Robert C. Martin</cite>
+                </blockquote>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 John Doe. All rights reserved.</p>
+        <address>
+            <a href="mailto:john@example.com">john@example.com</a> |
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </address>
+    </footer>
+</body>
+</html>
+```
+
+### projects.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="John Doe's Development Projects and Portfolio">
+    <title>Projects - John Doe</title>
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html" aria-current="page">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>My Projects</h1>
+        <p>A collection of my development work and personal projects</p>
+
+        <section id="web-applications">
+            <h2>Web Applications</h2>
+            
+            <article id="ecommerce">
+                <header>
+                    <h3>E-commerce Platform</h3>
+                    <p><time datetime="2023-03">March 2023</time> - <time datetime="2023-08">August 2023</time></p>
+                </header>
+                
+                <figure>
+                    <img src="assets/images/ecommerce-project.jpg" alt="E-commerce platform homepage showing product listings" width="600" height="400">
+                    <figcaption>Homepage of the e-commerce platform</figcaption>
+                </figure>
+                
+                <p>A comprehensive online store with user authentication, product catalog, shopping cart, and payment integration.</p>
+                
+                <details>
+                    <summary>Technical Details</summary>
+                    <ul>
+                        <li><strong>Frontend:</strong> React.js, Redux, CSS Modules</li>
+                        <li><strong>Backend:</strong> Node.js, Express.js, MongoDB</li>
+                        <li><strong>Authentication:</strong> JWT tokens</li>
+                        <li><strong>Payment:</strong> Stripe integration</li>
+                        <li><strong>Deployment:</strong> AWS EC2, Docker</li>
+                    </ul>
+                </details>
+                
+                <p>
+                    <a href="https://github.com/johndoe/ecommerce" target="_blank" rel="noopener noreferrer">View Code</a> |
+                    <a href="https://ecommerce-demo.johndoe.com" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                </p>
+            </article>
+
+            <article id="taskmanager">
+                <header>
+                    <h3>Task Management App</h3>
+                    <p><time datetime="2023-01">January 2023</time> - <time datetime="2023-03">March 2023</time></p>
+                </header>
+                
+                <figure>
+                    <img src="assets/images/taskmanager-project.jpg" alt="Task management application dashboard" width="600" height="400">
+                    <figcaption>Dashboard view of the task management app</figcaption>
+                </figure>
+                
+                <p>A collaborative task management tool with real-time updates, team collaboration, and project tracking.</p>
+                
+                <details>
+                    <summary>Key Features</summary>
+                    <ul>
+                        <li>Real-time collaboration using WebSockets</li>
+                        <li>Drag-and-drop task organization</li>
+                        <li>Team member assignments</li>
+                        <li>Progress tracking and analytics</li>
+                        <li>Email notifications</li>
+                    </ul>
+                </details>
+                
+                <p>
+                    <a href="https://github.com/johndoe/taskmanager" target="_blank" rel="noopener noreferrer">View Code</a> |
+                    <a href="https://tasks.johndoe.com" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                </p>
+            </article>
+        </section>
+
+        <section id="mobile-apps">
+            <h2>Mobile Applications</h2>
+            
+            <article>
+                <header>
+                    <h3>Weather App</h3>
+                    <p><time datetime="2022-11">November 2022</time> - <time datetime="2022-12">December 2022</time></p>
+                </header>
+                
+                <p>A responsive weather application with location-based forecasts and interactive maps.</p>
+                
+                <video controls width="300" height="600">
+                    <source src="assets/videos/weather-app-demo.mp4" type="video/mp4">
+                    <source src="assets/videos/weather-app-demo.webm" type="video/webm">
+                    <track kind="captions" src="assets/videos/weather-app-captions.vtt" srclang="en" label="English">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <p>
+                    <a href="https://github.com/johndoe/weather-app" target="_blank" rel="noopener noreferrer">View Code</a>
+                </p>
+            </article>
+        </section>
+
+        <section id="open-source">
+            <h2>Open Source Contributions</h2>
+            
+            <article>
+                <h3>React Component Library</h3>
+                <p>Contributing to a popular React component library with over 10k stars on GitHub.</p>
+                <p><a href="https://github.com/react-library/components" target="_blank" rel="noopener noreferrer">View Repository</a></p>
+            </article>
+            
+            <article>
+                <h3>Node.js Authentication Middleware</h3>
+                <p>Developed and maintain an authentication middleware package for Express.js applications.</p>
+                <p><a href="https://github.com/johndoe/auth-middleware" target="_blank" rel="noopener noreferrer">View Repository</a></p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 John Doe. All rights reserved.</p>
+        <address>
+            <a href="mailto:john@example.com">john@example.com</a> |
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </address>
+    </footer>
+</body>
+</html>
+```
+
+### contact.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact John Doe - Full Stack Developer">
+    <title>Contact - John Doe</title>
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html" aria-current="page">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Get In Touch</h1>
+        <p>I'd love to hear from you! Let's discuss your project or just say hello.</p>
+
+        <section id="contact-info">
+            <h2>Contact Information</h2>
+            <address>
+                <p>
+                    <strong>Email:</strong> 
+                    <a href="mailto:john@example.com">john@example.com</a>
+                </p>
+                <p>
+                    <strong>Phone:</strong> 
+                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                </p>
+                <p>
+                    <strong>LinkedIn:</strong> 
+                    <a href="https://linkedin.com/in/johndoe" target="_blank" rel="noopener noreferrer">linkedin.com/in/johndoe</a>
+                </p>
+                <p>
+                    <strong>GitHub:</strong> 
+                    <a href="https://github.com/johndoe" target="_blank" rel="noopener noreferrer">github.com/johndoe</a>
+                </p>
+            </address>
+        </section>
+
+        <section id="contact-form">
+            <h2>Send me a message</h2>
+            <form action="/submit-contact" method="post">
+                <fieldset>
+                    <legend>Contact Form</legend>
+                    
+                    <div>
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required 
+                               placeholder="Enter your full name" 
+                               autocomplete="name">
+                    </div>
+                    
+                    <div>
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required 
+                               placeholder="Enter your email address" 
+                               autocomplete="email">
+                    </div>
+                    
+                    <div>
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" 
+                               placeholder="Enter your company name" 
+                               autocomplete="organization">
+                    </div>
+                    
+                    <div>
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="project-inquiry">Project Inquiry</option>
+                            <option value="collaboration">Collaboration</option>
+                            <option value="job-opportunity">Job Opportunity</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="budget">Project Budget</label>
+                        <input type="range" id="budget" name="budget" 
+                               min="1000" max="50000" step="1000" value="10000">
+                        <output for="budget">$10,000</output>
+                    </div>
+                    
+                    <div>
+                        <label for="timeline">Preferred Timeline</label>
+                        <input type="date" id="timeline" name="timeline" 
+                               min="2023-12-01">
+                    </div>
+                    
+                    <div>
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required 
+                                  rows="6" cols="50" 
+                                  placeholder="Tell me about your project or inquiry..." 
+                                  minlength="20" maxlength="1000"></textarea>
+                    </div>
+                    
+                    <div>
+                        <input type="checkbox" id="newsletter" name="newsletter" value="yes">
+                        <label for="newsletter">Subscribe to my newsletter for web development tips</label>
+                    </div>
+                    
+                    <div>
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the <a href="/terms" target="_blank">terms and conditions</a> *</label>
+                    </div>
+                    
+                    <div>
+                        <button type="submit">Send Message</button>
+                        <button type="reset">Clear Form</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+
+        <section id="availability">
+            <h2>Availability</h2>
+            <p>I'm currently available for new projects and collaborations.</p>
+            
+            <details>
+                <summary>Response Time</summary>
+                <ul>
+                    <li>Email: Within 24 hours</li>
+                    <li>Phone: Business hours (9 AM - 6 PM EST)</li>
+                    <li>LinkedIn: Within 48 hours</li>
+                </ul>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 John Doe. All rights reserved.</p>
+        <address>
+            <a href="mailto:john@example.com">john@example.com</a> |
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </address>
+    </footer>
+
+    <script>
+        // Update budget display
+        const budgetSlider = document.getElementById('budget');
+        const budgetOutput = document.querySelector('output[for="budget"]');
+        
+        budgetSlider.addEventListener('input', function() {
+            budgetOutput.textContent = `$${parseInt(this.value).toLocaleString()}`;
+        });
+    </script>
+</body>
+</html>
+```
+
+## 🛠️ Project 2: Recipe Collection Website
+
+Create a recipe collection website with semantic HTML and proper structure.
+
+### recipe-collection.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Delicious homemade recipes for every occasion">
+    <title>Recipe Collection - Home Cooking Made Easy</title>
+    <link rel="icon" href="assets/images/recipe-favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Recipe Collection</h1>
+        <nav>
+            <ul>
+                <li><a href="#appetizers">Appetizers</a></li>
+                <li><a href="#main-courses">Main Courses</a></li>
+                <li><a href="#desserts">Desserts</a></li>
+                <li><a href="#beverages">Beverages</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="featured-recipe">
+            <h2>Featured Recipe</h2>
+            <article>
+                <header>
+                    <h3>Classic Chocolate Chip Cookies</h3>
+                    <p>Perfect for any occasion, these cookies are crispy on the outside and chewy on the inside.</p>
+                </header>
+                
+                <figure>
+                    <img src="assets/images/chocolate-chip-cookies.jpg" 
+                         alt="Golden brown chocolate chip cookies on a white plate" 
+                         width="400" height="300">
+                    <figcaption>Fresh-baked chocolate chip cookies</figcaption>
+                </figure>
+                
+                <div class="recipe-meta">
+                    <p><strong>Prep Time:</strong> <time datetime="PT15M">15 minutes</time></p>
+                    <p><strong>Cook Time:</strong> <time datetime="PT12M">12 minutes</time></p>
+                    <p><strong>Total Time:</strong> <time datetime="PT27M">27 minutes</time></p>
+                    <p><strong>Serves:</strong> 24 cookies</p>
+                    <p><strong>Difficulty:</strong> Easy</p>
+                </div>
+                
+                <section class="ingredients">
+                    <h4>Ingredients</h4>
+                    <ul>
+                        <li>2¼ cups all-purpose flour</li>
+                        <li>1 teaspoon baking soda</li>
+                        <li>1 teaspoon salt</li>
+                        <li>1 cup butter, softened</li>
+                        <li>¾ cup granulated sugar</li>
+                        <li>¾ cup packed brown sugar</li>
+                        <li>2 large eggs</li>
+                        <li>2 teaspoons vanilla extract</li>
+                        <li>2 cups chocolate chips</li>
+                    </ul>
+                </section>
+                
+                <section class="instructions">
+                    <h4>Instructions</h4>
+                    <ol>
+                        <li>Preheat oven to <data value="375">375°F</data> (<data value="190">190°C</data>).</li>
+                        <li>In a medium bowl, whisk together flour, baking soda, and salt.</li>
+                        <li>In a large bowl, cream butter and both sugars until light and fluffy.</li>
+                        <li>Beat in eggs one at a time, then vanilla.</li>
+                        <li>Gradually mix in flour mixture until just combined.</li>
+                        <li>Stir in chocolate chips.</li>
+                        <li>Drop rounded tablespoons of dough onto ungreased baking sheets.</li>
+                        <li>Bake for <time datetime="PT10M">10-12 minutes</time> or until golden brown.</li>
+                        <li>Cool on baking sheet for 2 minutes, then transfer to wire rack.</li>
+                    </ol>
+                </section>
+                
+                <section class="nutrition">
+                    <h4>Nutrition Information</h4>
+                    <p><small>Per cookie (approximate):</small></p>
+                    <ul>
+                        <li>Calories: 180</li>
+                        <li>Fat: 8g</li>
+                        <li>Carbohydrates: 26g</li>
+                        <li>Protein: 2g</li>
+                        <li>Sugar: 16g</li>
+                    </ul>
+                </section>
+                
+                <aside class="recipe-notes">
+                    <h4>Chef's Notes</h4>
+                    <p>For chewier cookies, slightly underbake them. For crispier cookies, bake for an extra 1-2 minutes.</p>
+                    <p>Store in an airtight container for up to one week.</p>
+                </aside>
+            </article>
+        </section>
+
+        <section id="recipe-categories">
+            <h2>Recipe Categories</h2>
+            
+            <section id="appetizers">
+                <h3>Appetizers</h3>
+                <article>
+                    <h4>Spinach and Artichoke Dip</h4>
+                    <p>Creamy, cheesy dip perfect for parties</p>
+                    <p><strong>Prep:</strong> <time datetime="PT10M">10 min</time> | <strong>Cook:</strong> <time datetime="PT25M">25 min</time></p>
+                </article>
+                
+                <article>
+                    <h4>Bacon-Wrapped Scallops</h4>
+                    <p>Elegant appetizer with crispy bacon and tender scallops</p>
+                    <p><strong>Prep:</strong> <time datetime="PT15M">15 min</time> | <strong>Cook:</strong> <time datetime="PT12M">12 min</time></p>
+                </article>
+            </section>
+            
+            <section id="main-courses">
+                <h3>Main Courses</h3>
+                <article>
+                    <h4>Grilled Salmon with Lemon Herb Butter</h4>
+                    <p>Fresh salmon with aromatic herbs and citrus</p>
+                    <p><strong>Prep:</strong> <time datetime="PT10M">10 min</time> | <strong>Cook:</strong> <time datetime="PT15M">15 min</time></p>
+                </article>
+                
+                <article>
+                    <h4>Beef Stroganoff</h4>
+                    <p>Classic comfort food with tender beef and creamy sauce</p>
+                    <p><strong>Prep:</strong> <time datetime="PT20M">20 min</time> | <strong>Cook:</strong> <time datetime="PT30M">30 min</time></p>
+                </article>
+            </section>
+            
+            <section id="desserts">
+                <h3>Desserts</h3>
+                <article>
+                    <h4>Tiramisu</h4>
+                    <p>Classic Italian dessert with coffee and mascarpone</p>
+                    <p><strong>Prep:</strong> <time datetime="PT30M">30 min</time> | <strong>Chill:</strong> <time datetime="PT4H">4 hours</time></p>
+                </article>
+                
+                <article>
+                    <h4>Apple Pie</h4>
+                    <p>Traditional American pie with flaky crust and spiced apples</p>
+                    <p><strong>Prep:</strong> <time datetime="PT45M">45 min</time> | <strong>Bake:</strong> <time datetime="PT55M">55 min</time></p>
+                </article>
+            </section>
+            
+            <section id="beverages">
+                <h3>Beverages</h3>
+                <article>
+                    <h4>Fresh Lemonade</h4>
+                    <p>Refreshing summer drink made with real lemons</p>
+                    <p><strong>Prep:</strong> <time datetime="PT10M">10 min</time></p>
+                </article>
+                
+                <article>
+                    <h4>Hot Chocolate</h4>
+                    <p>Rich and creamy hot chocolate perfect for cold days</p>
+                    <p><strong>Prep:</strong> <time datetime="PT5M">5 min</time> | <strong>Cook:</strong> <time datetime="PT10M">10 min</time></p>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Recipe Collection. All rights reserved.</p>
+        <p>Follow us on social media for more recipes!</p>
+        <address>
+            <a href="mailto:recipes@example.com">recipes@example.com</a>
+        </address>
+    </footer>
+</body>
+</html>
+```
+
+## 🛠️ Project 3: News Article Website
+
+Create a news article website with proper semantic structure and accessibility.
+
+### news-article.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Latest technology news and updates">
+    <meta name="keywords" content="technology, news, web development, AI, programming">
+    <meta name="author" content="Tech News Daily">
+    <title>The Future of Web Development - Tech News Daily</title>
+    <link rel="icon" href="assets/images/news-favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Tech News Daily</h1>
+        <nav>
+            <ul>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#web-dev">Web Development</a></li>
+                <li><a href="#ai">Artificial Intelligence</a></li>
+                <li><a href="#mobile">Mobile</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <header>
+                <h1>The Future of Web Development: Trends to Watch in 2024</h1>
+                <p class="article-summary">Exploring the emerging technologies and practices that will shape web development in the coming year.</p>
+                
+                <div class="article-meta">
+                    <address>
+                        By <a href="mailto:sarah@technews.com" rel="author">Sarah Johnson</a>
+                    </address>
+                    <p>Published on <time datetime="2023-12-01T10:30:00Z">December 1, 2023</time></p>
+                    <p>Updated on <time datetime="2023-12-01T14:15:00Z">December 1, 2023</time></p>
+                    <p>Reading time: 8 minutes</p>
+                </div>
+                
+                <figure>
+                    <img src="assets/images/web-development-future.jpg" 
+                         alt="Futuristic web development workspace with holographic displays" 
+                         width="800" height="400">
+                    <figcaption>The evolution of web development continues to accelerate</figcaption>
+                </figure>
+            </header>
+
+            <section id="introduction">
+                <p>Web development is constantly evolving, with new technologies and methodologies emerging regularly. As we approach 2024, several key trends are shaping the future of how we build and interact with web applications.</p>
+                
+                <p>From <abbr title="Artificial Intelligence">AI</abbr>-powered development tools to advanced <abbr title="Progressive Web Applications">PWAs</abbr>, the landscape is changing rapidly. Let's explore the most significant trends that will define web development in the coming year.</p>
+            </section>
+
+            <section id="ai-integration">
+                <h2>AI Integration in Development</h2>
+                <p>Artificial Intelligence is revolutionizing how developers write code, debug applications, and optimize performance. Tools like GitHub Copilot and ChatGPT are becoming indispensable for modern developers.</p>
+                
+                <blockquote cite="https://github.com/features/copilot">
+                    <p>GitHub Copilot helps developers write code faster by suggesting whole lines or entire functions right inside their editor.</p>
+                </blockquote>
+                
+                <h3>Key AI Development Tools</h3>
+                <ul>
+                    <li><strong>Code Generation:</strong> AI-powered code completion and generation</li>
+                    <li><strong>Bug Detection:</strong> Automated code review and error detection</li>
+                    <li><strong>Performance Optimization:</strong> AI-driven performance analysis</li>
+                    <li><strong>Testing:</strong> Automated test case generation</li>
+                </ul>
+            </section>
+
+            <section id="webassembly">
+                <h2>WebAssembly (WASM) Adoption</h2>
+                <p>WebAssembly is enabling high-performance applications in the browser, allowing developers to run code written in languages like C++, Rust, and Go at near-native speeds.</p>
+                
+                <figure>
+                    <img src="assets/images/webassembly-performance.jpg" 
+                         alt="Performance comparison chart showing WebAssembly vs JavaScript speed" 
+                         width="600" height="400">
+                    <figcaption>WebAssembly performance comparison with traditional JavaScript</figcaption>
+                </figure>
+                
+                <details>
+                    <summary>WebAssembly Use Cases</summary>
+                    <ul>
+                        <li>Image and video processing</li>
+                        <li>Game development</li>
+                        <li>Scientific computing</li>
+                        <li>Cryptocurrency mining</li>
+                        <li>Desktop application porting</li>
+                    </ul>
+                </details>
+            </section>
+
+            <section id="serverless">
+                <h2>Serverless and Edge Computing</h2>
+                <p>The shift towards serverless architectures and edge computing is accelerating, with platforms like Vercel, Netlify, and Cloudflare Workers leading the way.</p>
+                
+                <h3>Benefits of Serverless</h3>
+                <dl>
+                    <dt>Cost Efficiency</dt>
+                    <dd>Pay only for what you use, no idle server costs</dd>
+                    
+                    <dt>Automatic Scaling</dt>
+                    <dd>Handle traffic spikes without manual intervention</dd>
+                    
+                    <dt>Reduced Complexity</dt>
+                    <dd>Focus on code, not infrastructure management</dd>
+                    
+                    <dt>Global Distribution</dt>
+                    <dd>Deploy functions closer to users for better performance</dd>
+                </dl>
+            </section>
+
+            <section id="progressive-web-apps">
+                <h2>Progressive Web Apps Evolution</h2>
+                <p>PWAs continue to bridge the gap between web and native applications, with new capabilities being added regularly.</p>
+                
+                <h3>Latest PWA Features</h3>
+                <ul>
+                    <li><strong>App Shortcuts:</strong> Quick access to key features</li>
+                    <li><strong>File System Access:</strong> Read and write local files</li>
+                    <li><strong>Web Share API:</strong> Native sharing capabilities</li>
+                    <li><strong>Background Sync:</strong> Offline data synchronization</li>
+                    <li><strong>Push Notifications:</strong> Real-time user engagement</li>
+                </ul>
+                
+                <aside>
+                    <h4>PWA Success Story</h4>
+                    <p>Twitter's PWA resulted in a 65% increase in pages per session and a 75% increase in Tweets sent, demonstrating the power of progressive web applications.</p>
+                </aside>
+            </section>
+
+            <section id="web-components">
+                <h2>Web Components Maturity</h2>
+                <p>Web Components are becoming more mainstream, providing a framework-agnostic way to create reusable custom elements.</p>
+                
+                <pre><code>
+class CustomButton extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            &lt;style&gt;
+                button {
+                    background: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+            &lt;/style&gt;
+            &lt;button&gt;
+                &lt;slot&gt;&lt;/slot&gt;
+            &lt;/button&gt;
+        `;
+    }
+}
+
+customElements.define('custom-button', CustomButton);
+                </code></pre>
+            </section>
+
+            <section id="accessibility">
+                <h2>Accessibility-First Development</h2>
+                <p>Accessibility is becoming a core requirement rather than an afterthought, with new tools and standards making it easier to build inclusive applications.</p>
+                
+                <h3>Key Accessibility Trends</h3>
+                <ul>
+                    <li><strong>Automated Testing:</strong> Tools like axe-core for continuous accessibility testing</li>
+                    <li><strong>Design Systems:</strong> Accessible components built into design systems</li>
+                    <li><strong>Screen Reader Support:</strong> Better support for assistive technologies</li>
+                    <li><strong>Voice Navigation:</strong> Voice-controlled web interfaces</li>
+                </ul>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                <p>The future of web development is exciting and full of possibilities. As these trends continue to evolve, developers must stay current with new technologies while maintaining focus on user experience, performance, and accessibility.</p>
+                
+                <p>The key to success in 2024 will be balancing innovation with practical implementation, ensuring that new technologies serve real user needs rather than just technical curiosity.</p>
+            </section>
+
+            <footer>
+                <p>Tagged: <a href="/tags/web-development">Web Development</a>, <a href="/tags/ai">AI</a>, <a href="/tags/webassembly">WebAssembly</a>, <a href="/tags/pwa">PWA</a></p>
+                <p>Share this article: 
+                    <a href="https://twitter.com/intent/tweet?url=https://technews.com/web-dev-future" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://technews.com/web-dev-future" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </p>
+            </footer>
+        </article>
+
+        <aside id="related-articles">
+            <h2>Related Articles</h2>
+            <ul>
+                <li><a href="/articles/javascript-frameworks-2024">JavaScript Frameworks in 2024</a></li>
+                <li><a href="/articles/css-grid-vs-flexbox">CSS Grid vs Flexbox: When to Use Each</a></li>
+                <li><a href="/articles/web-performance-optimization">Web Performance Optimization Techniques</a></li>
+            </ul>
+        </aside>
+
+        <section id="comments">
+            <h2>Comments</h2>
+            <form action="/submit-comment" method="post">
+                <fieldset>
+                    <legend>Leave a Comment</legend>
+                    
+                    <div>
+                        <label for="comment-name">Name *</label>
+                        <input type="text" id="comment-name" name="name" required>
+                    </div>
+                    
+                    <div>
+                        <label for="comment-email">Email *</label>
+                        <input type="email" id="comment-email" name="email" required>
+                    </div>
+                    
+                    <div>
+                        <label for="comment-website">Website</label>
+                        <input type="url" id="comment-website" name="website">
+                    </div>
+                    
+                    <div>
+                        <label for="comment-text">Comment *</label>
+                        <textarea id="comment-text" name="comment" required rows="5" cols="50"></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit">Post Comment</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Tech News Daily. All rights reserved.</p>
+        <nav>
+            <ul>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+</html>
+```
+
+## 📝 Practice Exercises
+
+### Exercise 1: Form Validation
+Create a registration form with proper validation attributes and semantic markup.
+
+### Exercise 2: Accessibility Audit
+Use a screen reader to test your HTML pages and identify accessibility issues.
+
+### Exercise 3: SEO Optimization
+Add proper meta tags, structured data, and semantic markup for better search engine visibility.
+
+### Exercise 4: Performance Optimization
+Optimize images, implement lazy loading, and use proper resource hints.
+
+## 🔍 Self-Assessment
+
+1. Can you create a semantic HTML structure without using div elements?
+2. Do you understand the difference between `<article>` and `<section>`?
+3. Can you create accessible forms with proper labels and validation?
+4. Do you know how to implement proper heading hierarchy?
+5. Can you use HTML5 multimedia elements effectively?
+
+This comprehensive practical guide provides real-world projects and exercises to master HTML development skills.
+
+---
+
+**Next:** Continue to HTML Advanced concepts and modern APIs

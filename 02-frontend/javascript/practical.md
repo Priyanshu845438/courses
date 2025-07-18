@@ -2395,3 +2395,1679 @@ testProperty(
 ```
 
 This comprehensive Intermediate JavaScript guide covers essential concepts for advancing your JavaScript skills. Practice these examples and build projects to reinforce your understanding!
+# 🚀 JavaScript Practical Exercises
+
+## 🎯 Learning Objectives
+By completing these exercises, you will:
+- Practice JavaScript fundamentals and ES6+ features
+- Build interactive web applications
+- Work with APIs and asynchronous programming
+- Implement common programming patterns
+- Debug and optimize JavaScript code
+
+---
+
+## 🔧 Exercise 1: DOM Manipulation and Events
+
+### Task: Build an Interactive Todo App
+
+Create a fully functional todo application with local storage.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="todo-style.css">
+</head>
+<body>
+    <div class="todo-app">
+        <header class="app-header">
+            <h1>My Todo App</h1>
+            <p class="date" id="current-date"></p>
+        </header>
+        
+        <form class="todo-form" id="todo-form">
+            <input 
+                type="text" 
+                id="todo-input" 
+                placeholder="What needs to be done?"
+                maxlength="100"
+                required
+            >
+            <button type="submit" class="btn-add">Add Task</button>
+        </form>
+        
+        <div class="todo-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        
+        <ul class="todo-list" id="todo-list">
+            <!-- Todo items will be inserted here -->
+        </ul>
+        
+        <div class="todo-stats">
+            <span class="todo-count" id="todo-count">0 items left</span>
+            <button class="btn-clear" id="clear-completed">Clear Completed</button>
+        </div>
+    </div>
+    
+    <script src="todo-script.js"></script>
+</body>
+</html>
+```
+
+**Your JavaScript Task (`todo-script.js`):**
+
+```javascript
+// Todo App Implementation
+class TodoApp {
+    constructor() {
+        this.todos = this.loadTodos();
+        this.currentFilter = 'all';
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.updateDate();
+        this.render();
+    }
+
+    bindEvents() {
+        // Form submission
+        document.getElementById('todo-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.addTodo();
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.setFilter(e.target.dataset.filter);
+            });
+        });
+
+        // Clear completed button
+        document.getElementById('clear-completed').addEventListener('click', () => {
+            this.clearCompleted();
+        });
+
+        // Input validation
+        const todoInput = document.getElementById('todo-input');
+        todoInput.addEventListener('input', (e) => {
+            this.validateInput(e.target);
+        });
+    }
+
+    addTodo() {
+        const input = document.getElementById('todo-input');
+        const text = input.value.trim();
+        
+        if (!text) return;
+
+        const todo = {
+            id: Date.now().toString(),
+            text: text,
+            completed: false,
+            createdAt: new Date().toISOString()
+        };
+
+        this.todos.unshift(todo);
+        this.saveTodos();
+        this.render();
+        
+        // Clear input and show success animation
+        input.value = '';
+        this.showNotification('Task added successfully!');
+    }
+
+    deleteTodo(id) {
+        this.todos = this.todos.filter(todo => todo.id !== id);
+        this.saveTodos();
+        this.render();
+        this.showNotification('Task deleted!');
+    }
+
+    toggleTodo(id) {
+        const todo = this.todos.find(todo => todo.id === id);
+        if (todo) {
+            todo.completed = !todo.completed;
+            this.saveTodos();
+            this.render();
+        }
+    }
+
+    editTodo(id, newText) {
+        const todo = this.todos.find(todo => todo.id === id);
+        if (todo && newText.trim()) {
+            todo.text = newText.trim();
+            this.saveTodos();
+            this.render();
+            this.showNotification('Task updated!');
+        }
+    }
+
+    setFilter(filter) {
+        this.currentFilter = filter;
+        
+        // Update active filter button
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.filter === filter);
+        });
+        
+        this.render();
+    }
+
+    clearCompleted() {
+        const completedCount = this.todos.filter(todo => todo.completed).length;
+        if (completedCount === 0) {
+            this.showNotification('No completed tasks to clear!');
+            return;
+        }
+
+        this.todos = this.todos.filter(todo => !todo.completed);
+        this.saveTodos();
+        this.render();
+        this.showNotification(`${completedCount} completed tasks cleared!`);
+    }
+
+    getFilteredTodos() {
+        switch (this.currentFilter) {
+            case 'active':
+                return this.todos.filter(todo => !todo.completed);
+            case 'completed':
+                return this.todos.filter(todo => todo.completed);
+            default:
+                return this.todos;
+        }
+    }
+
+    render() {
+        const todoList = document.getElementById('todo-list');
+        const filteredTodos = this.getFilteredTodos();
+
+        // Clear current todos
+        todoList.innerHTML = '';
+
+        if (filteredTodos.length === 0) {
+            todoList.innerHTML = `
+                <li class="no-todos">
+                    <p>No tasks ${this.currentFilter === 'all' ? '' : this.currentFilter} yet!</p>
+                </li>
+            `;
+        } else {
+            filteredTodos.forEach(todo => {
+                const todoElement = this.createTodoElement(todo);
+                todoList.appendChild(todoElement);
+            });
+        }
+
+        this.updateStats();
+    }
+
+    createTodoElement(todo) {
+        const li = document.createElement('li');
+        li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+        li.setAttribute('data-id', todo.id);
+
+        li.innerHTML = `
+            <div class="todo-content">
+                <label class="todo-checkbox">
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''}>
+                    <span class="checkmark"></span>
+                </label>
+                <span class="todo-text" ${!todo.completed ? 'contenteditable="true"' : ''}>${todo.text}</span>
+            </div>
+            <div class="todo-actions">
+                <button class="btn-edit" title="Edit task">✏️</button>
+                <button class="btn-delete" title="Delete task">🗑️</button>
+            </div>
+        `;
+
+        // Bind events for this todo item
+        this.bindTodoEvents(li, todo);
+
+        return li;
+    }
+
+    bindTodoEvents(todoElement, todo) {
+        // Toggle completion
+        const checkbox = todoElement.querySelector('input[type="checkbox"]');
+        checkbox.addEventListener('change', () => {
+            this.toggleTodo(todo.id);
+        });
+
+        // Edit todo text
+        const todoText = todoElement.querySelector('.todo-text');
+        if (!todo.completed) {
+            todoText.addEventListener('blur', (e) => {
+                this.editTodo(todo.id, e.target.textContent);
+            });
+
+            todoText.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.target.blur();
+                }
+            });
+        }
+
+        // Delete todo
+        const deleteBtn = todoElement.querySelector('.btn-delete');
+        deleteBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete this task?')) {
+                this.deleteTodo(todo.id);
+            }
+        });
+
+        // Edit button
+        const editBtn = todoElement.querySelector('.btn-edit');
+        editBtn.addEventListener('click', () => {
+            todoText.focus();
+        });
+    }
+
+    updateStats() {
+        const activeTodos = this.todos.filter(todo => !todo.completed);
+        const count = activeTodos.length;
+        const todoCount = document.getElementById('todo-count');
+        
+        todoCount.textContent = `${count} ${count === 1 ? 'item' : 'items'} left`;
+
+        // Update clear button visibility
+        const clearBtn = document.getElementById('clear-completed');
+        const completedCount = this.todos.filter(todo => todo.completed).length;
+        clearBtn.style.opacity = completedCount > 0 ? '1' : '0.5';
+        clearBtn.disabled = completedCount === 0;
+    }
+
+    updateDate() {
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        
+        document.getElementById('current-date').textContent = 
+            now.toLocaleDateString('en-US', options);
+    }
+
+    validateInput(input) {
+        const value = input.value.trim();
+        const isValid = value.length > 0 && value.length <= 100;
+        
+        input.classList.toggle('invalid', !isValid && value.length > 0);
+        
+        // Update submit button state
+        const submitBtn = document.querySelector('.btn-add');
+        submitBtn.disabled = !isValid;
+    }
+
+    showNotification(message) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Local Storage Methods
+    saveTodos() {
+        localStorage.setItem('todos', JSON.stringify(this.todos));
+    }
+
+    loadTodos() {
+        try {
+            const todos = localStorage.getItem('todos');
+            return todos ? JSON.parse(todos) : [];
+        } catch (error) {
+            console.error('Error loading todos:', error);
+            return [];
+        }
+    }
+}
+
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new TodoApp();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    // Ctrl/Cmd + K to focus on input
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('todo-input').focus();
+    }
+});
+```
+
+**Supporting CSS (`todo-style.css`):**
+
+```css
+/* Todo App Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.todo-app {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.app-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.app-header h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.date {
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.todo-form {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#todo-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#todo-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+#todo-input.invalid {
+    border-color: #e74c3c;
+}
+
+.btn-add {
+    padding: 12px 24px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-add:hover:not(:disabled) {
+    background: #5a6fd8;
+}
+
+.btn-add:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.todo-filters {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin: 0 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #e1e5e9;
+}
+
+.filter-btn {
+    flex: 1;
+    padding: 10px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.todo-list {
+    list-style: none;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f3f4;
+    transition: all 0.3s ease;
+}
+
+.todo-item:hover {
+    background: #f8f9fa;
+}
+
+.todo-item.completed {
+    opacity: 0.6;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+}
+
+.todo-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 12px;
+}
+
+.todo-checkbox {
+    position: relative;
+    cursor: pointer;
+}
+
+.todo-checkbox input {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.todo-checkbox input:checked + .checkmark {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.todo-checkbox input:checked + .checkmark::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.todo-text {
+    flex: 1;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.todo-text:focus {
+    outline: none;
+    background: #f8f9fa;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.todo-item:hover .todo-actions {
+    opacity: 1;
+}
+
+.btn-edit,
+.btn-delete {
+    background: none;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-edit:hover {
+    background: #e3f2fd;
+}
+
+.btn-delete:hover {
+    background: #ffebee;
+}
+
+.no-todos {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+}
+
+.todo-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.btn-clear {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.btn-clear:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.btn-clear:disabled {
+    color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* Notification */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #2ecc71;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .todo-app {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+    }
+    
+    .todo-form {
+        flex-direction: column;
+    }
+    
+    .todo-item {
+        padding: 12px 16px;
+    }
+    
+    .todo-actions {
+        opacity: 1;
+    }
+}
+```
+
+---
+
+## 🌐 Exercise 2: API Integration and Async Programming
+
+### Task: Build a Weather Dashboard
+
+Create a weather application that fetches data from an API and displays current weather and forecast.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="weather-style.css">
+</head>
+<body>
+    <div class="weather-app">
+        <header class="weather-header">
+            <h1>Weather Dashboard</h1>
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="city-search" 
+                    placeholder="Enter city name..."
+                    autocomplete="off"
+                >
+                <button id="search-btn">Search</button>
+                <button id="location-btn" title="Use current location">📍</button>
+            </div>
+        </header>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Loading weather data...</p>
+        </div>
+
+        <div class="error-message" id="error-message">
+            <p>Something went wrong. Please try again.</p>
+        </div>
+
+        <div class="weather-content" id="weather-content">
+            <div class="current-weather">
+                <div class="weather-main">
+                    <div class="location">
+                        <h2 id="city-name">--</h2>
+                        <p id="date-time">--</p>
+                    </div>
+                    <div class="temperature">
+                        <span id="current-temp">--°</span>
+                        <div class="weather-icon">
+                            <img id="weather-icon" src="" alt="Weather icon">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <span class="label">Feels like</span>
+                        <span id="feels-like">--°</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Humidity</span>
+                        <span id="humidity">--%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Wind Speed</span>
+                        <span id="wind-speed">-- km/h</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Pressure</span>
+                        <span id="pressure">-- hPa</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Visibility</span>
+                        <span id="visibility">-- km</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">UV Index</span>
+                        <span id="uv-index">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="forecast-section">
+                <h3>5-Day Forecast</h3>
+                <div class="forecast-container" id="forecast-container">
+                    <!-- Forecast items will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-searches">
+            <h3>Recent Searches</h3>
+            <div class="recent-cities" id="recent-cities">
+                <!-- Recent cities will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="weather-script.js"></script>
+</body>
+</html>
+```
+
+**Your JavaScript Task (`weather-script.js`):**
+
+```javascript
+// Weather Dashboard Implementation
+class WeatherDashboard {
+    constructor() {
+        // Use OpenWeatherMap API (you'll need to get a free API key)
+        this.API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual API key
+        this.BASE_URL = 'https://api.openweathermap.org/data/2.5';
+        this.recentSearches = this.loadRecentSearches();
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.renderRecentSearches();
+        this.loadDefaultCity();
+    }
+
+    bindEvents() {
+        // Search functionality
+        document.getElementById('search-btn').addEventListener('click', () => {
+            this.searchWeather();
+        });
+
+        document.getElementById('city-search').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.searchWeather();
+            }
+        });
+
+        // Geolocation
+        document.getElementById('location-btn').addEventListener('click', () => {
+            this.getCurrentLocationWeather();
+        });
+
+        // Search input with debouncing
+        let searchTimeout;
+        document.getElementById('city-search').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                if (e.target.value.length > 2) {
+                    this.showSearchSuggestions(e.target.value);
+                }
+            }, 300);
+        });
+    }
+
+    async searchWeather() {
+        const cityInput = document.getElementById('city-search');
+        const cityName = cityInput.value.trim();
+        
+        if (!cityName) {
+            this.showError('Please enter a city name');
+            return;
+        }
+
+        await this.getWeatherData(cityName);
+        cityInput.value = '';
+    }
+
+    async getCurrentLocationWeather() {
+        if (!navigator.geolocation) {
+            this.showError('Geolocation is not supported by this browser');
+            return;
+        }
+
+        this.showLoading();
+
+        try {
+            const position = await this.getCurrentPosition();
+            const { latitude, longitude } = position.coords;
+            await this.getWeatherByCoords(latitude, longitude);
+        } catch (error) {
+            this.showError('Unable to get your location');
+        }
+    }
+
+    getCurrentPosition() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                timeout: 10000,
+                enableHighAccuracy: true
+            });
+        });
+    }
+
+    async getWeatherData(cityName) {
+        this.showLoading();
+
+        try {
+            // Get current weather
+            const currentResponse = await fetch(
+                `${this.BASE_URL}/weather?q=${cityName}&appid=${this.API_KEY}&units=metric`
+            );
+
+            if (!currentResponse.ok) {
+                throw new Error(`City not found: ${cityName}`);
+            }
+
+            const currentData = await currentResponse.json();
+
+            // Get forecast data
+            const forecastResponse = await fetch(
+                `${this.BASE_URL}/forecast?q=${cityName}&appid=${this.API_KEY}&units=metric`
+            );
+
+            const forecastData = await forecastResponse.json();
+
+            // Display weather data
+            this.displayWeatherData(currentData, forecastData);
+            this.addToRecentSearches(cityName);
+            this.hideLoading();
+            this.hideError();
+
+        } catch (error) {
+            this.showError(error.message);
+            this.hideLoading();
+        }
+    }
+
+    async getWeatherByCoords(lat, lon) {
+        try {
+            // Get current weather by coordinates
+            const currentResponse = await fetch(
+                `${this.BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${this.API_KEY}&units=metric`
+            );
+
+            const currentData = await currentResponse.json();
+
+            // Get forecast data
+            const forecastResponse = await fetch(
+                `${this.BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${this.API_KEY}&units=metric`
+            );
+
+            const forecastData = await forecastResponse.json();
+
+            this.displayWeatherData(currentData, forecastData);
+            this.addToRecentSearches(currentData.name);
+            this.hideLoading();
+            this.hideError();
+
+        } catch (error) {
+            this.showError('Unable to fetch weather data');
+            this.hideLoading();
+        }
+    }
+
+    displayWeatherData(currentData, forecastData) {
+        // Update current weather
+        document.getElementById('city-name').textContent = 
+            `${currentData.name}, ${currentData.sys.country}`;
+        
+        document.getElementById('date-time').textContent = 
+            this.formatDateTime(new Date());
+        
+        document.getElementById('current-temp').textContent = 
+            `${Math.round(currentData.main.temp)}°C`;
+        
+        document.getElementById('feels-like').textContent = 
+            `${Math.round(currentData.main.feels_like)}°C`;
+        
+        document.getElementById('humidity').textContent = 
+            `${currentData.main.humidity}%`;
+        
+        document.getElementById('wind-speed').textContent = 
+            `${Math.round(currentData.wind.speed * 3.6)} km/h`;
+        
+        document.getElementById('pressure').textContent = 
+            `${currentData.main.pressure} hPa`;
+        
+        document.getElementById('visibility').textContent = 
+            `${(currentData.visibility / 1000).toFixed(1)} km`;
+
+        // Weather icon
+        const iconCode = currentData.weather[0].icon;
+        document.getElementById('weather-icon').src = 
+            `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        document.getElementById('weather-icon').alt = 
+            currentData.weather[0].description;
+
+        // UV Index (would need additional API call in real implementation)
+        document.getElementById('uv-index').textContent = 'N/A';
+
+        // Update forecast
+        this.displayForecast(forecastData);
+
+        // Show weather content
+        document.getElementById('weather-content').style.display = 'block';
+    }
+
+    displayForecast(forecastData) {
+        const forecastContainer = document.getElementById('forecast-container');
+        forecastContainer.innerHTML = '';
+
+        // Group forecast by day (every 8th item for daily forecast)
+        const dailyForecasts = [];
+        for (let i = 0; i < forecastData.list.length; i += 8) {
+            dailyForecasts.push(forecastData.list[i]);
+        }
+
+        // Take only next 5 days
+        dailyForecasts.slice(0, 5).forEach(forecast => {
+            const forecastItem = this.createForecastItem(forecast);
+            forecastContainer.appendChild(forecastItem);
+        });
+    }
+
+    createForecastItem(forecast) {
+        const div = document.createElement('div');
+        div.className = 'forecast-item';
+
+        const date = new Date(forecast.dt * 1000);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const iconCode = forecast.weather[0].icon;
+
+        div.innerHTML = `
+            <div class="forecast-day">${dayName}</div>
+            <img class="forecast-icon" 
+                 src="https://openweathermap.org/img/wn/${iconCode}.png" 
+                 alt="${forecast.weather[0].description}">
+            <div class="forecast-temps">
+                <span class="forecast-high">${Math.round(forecast.main.temp_max)}°</span>
+                <span class="forecast-low">${Math.round(forecast.main.temp_min)}°</span>
+            </div>
+            <div class="forecast-desc">${forecast.weather[0].main}</div>
+        `;
+
+        return div;
+    }
+
+    addToRecentSearches(cityName) {
+        // Remove if already exists
+        this.recentSearches = this.recentSearches.filter(city => 
+            city.toLowerCase() !== cityName.toLowerCase()
+        );
+
+        // Add to beginning
+        this.recentSearches.unshift(cityName);
+
+        // Keep only last 5
+        this.recentSearches = this.recentSearches.slice(0, 5);
+
+        this.saveRecentSearches();
+        this.renderRecentSearches();
+    }
+
+    renderRecentSearches() {
+        const container = document.getElementById('recent-cities');
+        container.innerHTML = '';
+
+        if (this.recentSearches.length === 0) {
+            container.innerHTML = '<p class="no-recent">No recent searches</p>';
+            return;
+        }
+
+        this.recentSearches.forEach(city => {
+            const button = document.createElement('button');
+            button.className = 'recent-city-btn';
+            button.textContent = city;
+            button.addEventListener('click', () => {
+                this.getWeatherData(city);
+            });
+            container.appendChild(button);
+        });
+    }
+
+    showLoading() {
+        document.getElementById('loading').style.display = 'flex';
+        document.getElementById('weather-content').style.display = 'none';
+        document.getElementById('error-message').style.display = 'none';
+    }
+
+    hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+    }
+
+    showError(message) {
+        const errorElement = document.getElementById('error-message');
+        errorElement.querySelector('p').textContent = message;
+        errorElement.style.display = 'block';
+        document.getElementById('weather-content').style.display = 'none';
+    }
+
+    hideError() {
+        document.getElementById('error-message').style.display = 'none';
+    }
+
+    formatDateTime(date) {
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    loadDefaultCity() {
+        // Load weather for a default city or user's last searched city
+        const lastSearch = this.recentSearches[0];
+        if (lastSearch) {
+            this.getWeatherData(lastSearch);
+        } else {
+            this.getWeatherData('London'); // Default city
+        }
+    }
+
+    // Local Storage Methods
+    saveRecentSearches() {
+        localStorage.setItem('recentSearches', JSON.stringify(this.recentSearches));
+    }
+
+    loadRecentSearches() {
+        try {
+            const searches = localStorage.getItem('recentSearches');
+            return searches ? JSON.parse(searches) : [];
+        } catch (error) {
+            console.error('Error loading recent searches:', error);
+            return [];
+        }
+    }
+
+    // Search suggestions (simplified version)
+    async showSearchSuggestions(query) {
+        // In a real app, you might use a geocoding API for suggestions
+        // For this example, we'll skip this feature
+        console.log('Search suggestions for:', query);
+    }
+}
+
+// Initialize the weather dashboard
+document.addEventListener('DOMContentLoaded', () => {
+    new WeatherDashboard();
+});
+
+// Service Worker registration for offline functionality (optional)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+```
+
+---
+
+## 🧮 Exercise 3: Advanced JavaScript Patterns
+
+### Task: Build a Calculator with History and Memory Functions
+
+Create a scientific calculator with advanced features.
+
+```javascript
+// Advanced Calculator Implementation
+class ScientificCalculator {
+    constructor() {
+        this.currentInput = '0';
+        this.previousInput = '';
+        this.operator = '';
+        this.memory = 0;
+        this.history = this.loadHistory();
+        this.isNewCalculation = true;
+        this.init();
+    }
+
+    init() {
+        this.createCalculatorUI();
+        this.bindEvents();
+        this.updateDisplay();
+        this.renderHistory();
+    }
+
+    createCalculatorUI() {
+        const calculatorHTML = `
+            <div class="calculator">
+                <div class="calculator-header">
+                    <h2>Scientific Calculator</h2>
+                    <button class="btn-history" id="toggle-history">History</button>
+                </div>
+                
+                <div class="calculator-body">
+                    <div class="calculator-main">
+                        <div class="display">
+                            <div class="display-previous" id="display-previous"></div>
+                            <div class="display-current" id="display-current">0</div>
+                        </div>
+                        
+                        <div class="calculator-grid">
+                            <!-- Memory Functions -->
+                            <button class="btn btn-memory" data-action="memory-clear">MC</button>
+                            <button class="btn btn-memory" data-action="memory-recall">MR</button>
+                            <button class="btn btn-memory" data-action="memory-add">M+</button>
+                            <button class="btn btn-memory" data-action="memory-subtract">M-</button>
+                            
+                            <!-- Scientific Functions -->
+                            <button class="btn btn-function" data-action="sin">sin</button>
+                            <button class="btn btn-function" data-action="cos">cos</button>
+                            <button class="btn btn-function" data-action="tan">tan</button>
+                            <button class="btn btn-function" data-action="log">log</button>
+                            
+                            <button class="btn btn-function" data-action="ln">ln</button>
+                            <button class="btn btn-function" data-action="sqrt">√</button>
+                            <button class="btn btn-function" data-action="power">x²</button>
+                            <button class="btn btn-function" data-action="factorial">x!</button>
+                            
+                            <!-- Number Input -->
+                            <button class="btn btn-clear" data-action="clear">C</button>
+                            <button class="btn btn-clear" data-action="clear-entry">CE</button>
+                            <button class="btn btn-operation" data-action="backspace">⌫</button>
+                            <button class="btn btn-operation" data-operator="/">&divide;</button>
+                            
+                            <button class="btn btn-number" data-number="7">7</button>
+                            <button class="btn btn-number" data-number="8">8</button>
+                            <button class="btn btn-number" data-number="9">9</button>
+                            <button class="btn btn-operation" data-operator="*">&times;</button>
+                            
+                            <button class="btn btn-number" data-number="4">4</button>
+                            <button class="btn btn-number" data-number="5">5</button>
+                            <button class="btn btn-number" data-number="6">6</button>
+                            <button class="btn btn-operation" data-operator="-">&minus;</button>
+                            
+                            <button class="btn btn-number" data-number="1">1</button>
+                            <button class="btn btn-number" data-number="2">2</button>
+                            <button class="btn btn-number" data-number="3">3</button>
+                            <button class="btn btn-operation" data-operator="+">+</button>
+                            
+                            <button class="btn btn-number" data-number="0" style="grid-column: span 2;">0</button>
+                            <button class="btn btn-number" data-action="decimal">.</button>
+                            <button class="btn btn-equals" data-action="equals">=</button>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-history" id="calculator-history">
+                        <div class="history-header">
+                            <h3>History</h3>
+                            <button class="btn-clear-history" id="clear-history">Clear</button>
+                        </div>
+                        <div class="history-list" id="history-list">
+                            <!-- History items will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.innerHTML = calculatorHTML;
+    }
+
+    bindEvents() {
+        // Number buttons
+        document.querySelectorAll('[data-number]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const number = e.target.dataset.number;
+                if (number !== undefined) {
+                    this.inputNumber(number);
+                } else if (e.target.dataset.action === 'decimal') {
+                    this.inputDecimal();
+                }
+            });
+        });
+
+        // Operator buttons
+        document.querySelectorAll('[data-operator]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                this.inputOperator(e.target.dataset.operator);
+            });
+        });
+
+        // Action buttons
+        document.querySelectorAll('[data-action]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                this.handleAction(e.target.dataset.action);
+            });
+        });
+
+        // History toggle
+        document.getElementById('toggle-history').addEventListener('click', () => {
+            this.toggleHistory();
+        });
+
+        // Clear history
+        document.getElementById('clear-history').addEventListener('click', () => {
+            this.clearHistory();
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            this.handleKeyboard(e);
+        });
+    }
+
+    inputNumber(number) {
+        if (this.isNewCalculation) {
+            this.currentInput = number;
+            this.isNewCalculation = false;
+        } else {
+            this.currentInput = this.currentInput === '0' ? number : this.currentInput + number;
+        }
+        this.updateDisplay();
+    }
+
+    inputDecimal() {
+        if (this.isNewCalculation) {
+            this.currentInput = '0.';
+            this.isNewCalculation = false;
+        } else if (!this.currentInput.includes('.')) {
+            this.currentInput += '.';
+        }
+        this.updateDisplay();
+    }
+
+    inputOperator(operator) {
+        if (this.operator && !this.isNewCalculation) {
+            this.calculate();
+        }
+
+        this.operator = operator;
+        this.previousInput = this.currentInput;
+        this.isNewCalculation = true;
+        this.updateDisplay();
+    }
+
+    handleAction(action) {
+        switch (action) {
+            case 'equals':
+                this.calculate();
+                break;
+            case 'clear':
+                this.clear();
+                break;
+            case 'clear-entry':
+                this.clearEntry();
+                break;
+            case 'backspace':
+                this.backspace();
+                break;
+            case 'memory-clear':
+                this.memoryClear();
+                break;
+            case 'memory-recall':
+                this.memoryRecall();
+                break;
+            case 'memory-add':
+                this.memoryAdd();
+                break;
+            case 'memory-subtract':
+                this.memorySubtract();
+                break;
+            default:
+                this.scientificFunction(action);
+                break;
+        }
+    }
+
+    calculate() {
+        if (!this.operator || this.isNewCalculation) return;
+
+        const prev = parseFloat(this.previousInput);
+        const current = parseFloat(this.currentInput);
+        let result;
+
+        try {
+            switch (this.operator) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '*':
+                    result = prev * current;
+                    break;
+                case '/':
+                    if (current === 0) {
+                        throw new Error('Cannot divide by zero');
+                    }
+                    result = prev / current;
+                    break;
+                default:
+                    return;
+            }
+
+            // Add to history
+            const calculation = `${prev} ${this.getOperatorSymbol(this.operator)} ${current} = ${result}`;
+            this.addToHistory(calculation);
+
+            this.currentInput = this.formatResult(result);
+            this.operator = '';
+            this.previousInput = '';
+            this.isNewCalculation = true;
+
+        } catch (error) {
+            this.currentInput = 'Error';
+            this.isNewCalculation = true;
+        }
+
+        this.updateDisplay();
+    }
+
+    scientificFunction(func) {
+        const current = parseFloat(this.currentInput);
+        let result;
+
+        try {
+            switch (func) {
+                case 'sin':
+                    result = Math.sin(this.toRadians(current));
+                    break;
+                case 'cos':
+                    result = Math.cos(this.toRadians(current));
+                    break;
+                case 'tan':
+                    result = Math.tan(this.toRadians(current));
+                    break;
+                case 'log':
+                    if (current <= 0) throw new Error('Invalid input for log');
+                    result = Math.log10(current);
+                    break;
+                case 'ln':
+                    if (current <= 0) throw new Error('Invalid input for ln');
+                    result = Math.log(current);
+                    break;
+                case 'sqrt':
+                    if (current < 0) throw new Error('Invalid input for sqrt');
+                    result = Math.sqrt(current);
+                    break;
+                case 'power':
+                    result = Math.pow(current, 2);
+                    break;
+                case 'factorial':
+                    if (current < 0 || !Number.isInteger(current)) {
+                        throw new Error('Invalid input for factorial');
+                    }
+                    result = this.factorial(current);
+                    break;
+                default:
+                    return;
+            }
+
+            // Add to history
+            const calculation = `${func}(${current}) = ${result}`;
+            this.addToHistory(calculation);
+
+            this.currentInput = this.formatResult(result);
+            this.isNewCalculation = true;
+
+        } catch (error) {
+            this.currentInput = 'Error';
+            this.isNewCalculation = true;
+        }
+
+        this.updateDisplay();
+    }
+
+    // Memory functions
+    memoryClear() {
+        this.memory = 0;
+        this.showMemoryIndicator();
+    }
+
+    memoryRecall() {
+        this.currentInput = this.formatResult(this.memory);
+        this.isNewCalculation = true;
+        this.updateDisplay();
+    }
+
+    memoryAdd() {
+        this.memory += parseFloat(this.currentInput);
+        this.showMemoryIndicator();
+    }
+
+    memorySubtract() {
+        this.memory -= parseFloat(this.currentInput);
+        this.showMemoryIndicator();
+    }
+
+    showMemoryIndicator() {
+        // Visual indicator that memory has a value
+        const indicator = document.querySelector('.memory-indicator') || 
+                         document.createElement('div');
+        indicator.className = 'memory-indicator';
+        indicator.textContent = this.memory !== 0 ? 'M' : '';
+        
+        if (!document.querySelector('.memory-indicator')) {
+            document.querySelector('.display').appendChild(indicator);
+        }
+    }
+
+    // Utility functions
+    clear() {
+        this.currentInput = '0';
+        this.previousInput = '';
+        this.operator = '';
+        this.isNewCalculation = true;
+        this.updateDisplay();
+    }
+
+    clearEntry() {
+        this.currentInput = '0';
+        this.isNewCalculation = true;
+        this.updateDisplay();
+    }
+
+    backspace() {
+        if (this.currentInput.length > 1) {
+            this.currentInput = this.currentInput.slice(0, -1);
+        } else {
+            this.currentInput = '0';
+            this.isNewCalculation = true;
+        }
+        this.updateDisplay();
+    }
+
+    formatResult(result) {
+        // Handle very large or very small numbers
+        if (Math.abs(result) > 1e15 || (Math.abs(result) < 1e-10 && result !== 0)) {
+            return result.toExponential(6);
+        }
+        
+        // Round to avoid floating point precision issues
+        const rounded = Math.round(result * 1e10) / 1e10;
+        return rounded.toString();
+    }
+
+    toRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+
+    factorial(n) {
+        if (n === 0 || n === 1) return 1;
+        let result = 1;
+        for (let i = 2; i <= n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
+    getOperatorSymbol(operator) {
+        const symbols = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+        return symbols[operator] || operator;
+    }
+
+    updateDisplay() {
+        document.getElementById('display-current').textContent = this.currentInput;
+        
+        const previousDisplay = document.getElementById('display-previous');
+        if (this.operator && this.previousInput) {
+            previousDisplay.textContent = 
+                `${this.previousInput} ${this.getOperatorSymbol(this.operator)}`;
+        } else {
+            previousDisplay.textContent = '';
+        }
+    }
+
+    // History management
+    addToHistory(calculation) {
+        const historyItem = {
+            calculation,
+            timestamp: new Date().toLocaleString()
+        };
+        
+        this.history.unshift(historyItem);
+        
+        // Keep only last 20 calculations
+        this.history = this.history.slice(0, 20);
+        
+        this.saveHistory();
+        this.renderHistory();
+    }
+
+    renderHistory() {
+        const historyList = document.getElementById('history-list');
+        historyList.innerHTML = '';
+
+        if (this.history.length === 0) {
+            historyList.innerHTML = '<p class="no-history">No calculations yet</p>';
+            return;
+        }
+
+        this.history.forEach(item => {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.innerHTML = `
+                <div class="history-calculation">${item.calculation}</div>
+                <div class="history-time">${item.timestamp}</div>
+            `;
+            
+            // Click to use result
+            historyItem.addEventListener('click', () => {
+                const result = item.calculation.split(' = ')[1];
+                if (result && result !== 'Error') {
+                    this.currentInput = result;
+                    this.isNewCalculation = true;
+                    this.updateDisplay();
+                }
+            });
+            
+            historyList.appendChild(historyItem);
+        });
+    }
+
+    toggleHistory() {
+        const historyPanel = document.getElementById('calculator-history');
+        historyPanel.classList.toggle('visible');
+    }
+
+    clearHistory() {
+        this.history = [];
+        this.saveHistory();
+        this.renderHistory();
+    }
+
+    handleKeyboard(event) {
+        event.preventDefault();
+        
+        const key = event.key;
+        
+        if (key >= '0' && key <= '9') {
+            this.inputNumber(key);
+        } else if (key === '.') {
+            this.inputDecimal();
+        } else if (['+', '-', '*', '/'].includes(key)) {
+            this.inputOperator(key);
+        } else if (key === 'Enter' || key === '=') {
+            this.calculate();
+        } else if (key === 'Escape') {
+            this.clear();
+        } else if (key === 'Backspace') {
+            this.backspace();
+        }
+    }
+
+    // Local Storage
+    saveHistory() {
+        localStorage.setItem('calculatorHistory', JSON.stringify(this.history));
+    }
+
+    loadHistory() {
+        try {
+            const history = localStorage.getItem('calculatorHistory');
+            return history ? JSON.parse(history) : [];
+        } catch (error) {
+            console.error('Error loading history:', error);
+            return [];
+        }
+    }
+}
+
+// Initialize calculator when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new ScientificCalculator();
+});
+```
+
+---
+
+## 🎯 Practice Assignments
+
+### Assignment 1: Expense Tracker
+Build an expense tracking app with:
+- Add/edit/delete expenses
+- Category filtering
+- Monthly/yearly summaries
+- Data visualization with charts
+- Import/export functionality
+
+### Assignment 2: Quiz Application
+Create an interactive quiz app featuring:
+- Multiple question types (multiple choice, true/false, text input)
+- Timer functionality
+- Score calculation and feedback
+- Progress tracking
+- Leaderboard with local storage
+
+### Assignment 3: Image Gallery with Filters
+Develop a photo gallery with:
+- Lazy loading images
+- Filter by categories/tags
+- Search functionality
+- Lightbox view
+- Infinite scroll
+- Responsive masonry layout
+
+## 🔍 Self-Assessment Questions
+
+1. How do you handle asynchronous operations in JavaScript?
+2. What's the difference between `let`, `const`, and `var`?
+3. How do arrow functions differ from regular functions?
+4. What are Promises and how do they work?
+5. How do you debug JavaScript code effectively?
+6. What are the different ways to manipulate the DOM?
+7. How do you handle errors in JavaScript applications?
+
+## 📚 Additional Resources
+
+- [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- [JavaScript.info](https://javascript.info/) - Modern JavaScript tutorial
+- [Eloquent JavaScript](https://eloquentjavascript.net/) - Free online book
+- [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS) - Book series
+- [JavaScript30](https://javascript30.com/) - 30-day challenge
+
+---
+
+**Next:** Proceed to `advanced.md` for advanced JavaScript patterns and frameworks preparation.
